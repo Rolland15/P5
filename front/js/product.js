@@ -1,5 +1,5 @@
 let url = new URLSearchParams(window.location.search);
-console.log(url);
+//console.log(url);
 let id = url.get("id");
 
 fetch(`http://localhost:3000/api/products/${id}`)
@@ -9,7 +9,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
     }
   })
   .then(function (value) {
-    console.log(value);
+    // console.log(value);
 
     let imgContainerProduct = document.querySelector(".item__img");
     let imgProduct = document.createElement("img");
@@ -21,16 +21,27 @@ fetch(`http://localhost:3000/api/products/${id}`)
     let price = document.querySelector("#price");
     price.innerHTML = value.price;
     let description = document.querySelector("#description");
+    let nombre = document.querySelector("#quantity");
 
     description.innerHTML = value.description;
 
     for (let i = 0; i < value.colors.length; i++) {
       let colorsId = document.querySelector("#colors");
-      let blue = document.createElement("option");
-      blue.setAttribute("value", value.colors[i]);
-      blue.innerHTML = value.colors[i];
-      colorsId.appendChild(blue);
+      let colorsSelected = document.createElement("option");
+      colorsSelected.setAttribute("value", value.colors[i]);
+      colorsSelected.innerHTML = value.colors[i];
+      colorsId.appendChild(colorsSelected);
     }
+
+    let productAstocker = {
+      nameProduct: productName,
+      idProduct: id,
+      priceProduct: price,
+      colorProduct: colorsSelected,
+      quantity: nombre,
+    };
+
+    console.log(productAstocker);
   })
   .catch(function (err) {
     // Une erreur est survenue
