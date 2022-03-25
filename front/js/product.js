@@ -11,6 +11,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
   .then(function (value) {
     // console.log(value);
 
+    //DOM afficher le produits et ses détails
     let imgContainerProduct = document.querySelector(".item__img");
     let imgProduct = document.createElement("img");
     imgContainerProduct
@@ -21,27 +22,34 @@ fetch(`http://localhost:3000/api/products/${id}`)
     let price = document.querySelector("#price");
     price.innerHTML = value.price;
     let description = document.querySelector("#description");
-    let nombre = document.querySelector("#quantity");
-
     description.innerHTML = value.description;
+    let quantity = document.querySelector("#quantity");
+    let colorsId = document.querySelector("#colors");
+
+    //boucle pour le choix des couleurs
 
     for (let i = 0; i < value.colors.length; i++) {
-      let colorsId = document.querySelector("#colors");
       let colorsSelected = document.createElement("option");
       colorsSelected.setAttribute("value", value.colors[i]);
       colorsSelected.innerHTML = value.colors[i];
       colorsId.appendChild(colorsSelected);
     }
 
-    let productAstocker = {
-      nameProduct: productName,
-      idProduct: id,
-      priceProduct: price,
-      colorProduct: colorsSelected,
-      quantity: nombre,
-    };
+    let button = document.querySelector("#addToCart");
 
-    console.log(productAstocker);
+    button.addEventListener("click", () => {
+      let objet = {
+        id: id,
+        price: price,
+        couleur: colorsId.value,
+        quantite: quantity.value,
+      };
+      console.log(objet);
+      console.log(id);
+      console.log(price);
+      console.log(colorsId.value);
+      console.log(quantity.value);
+    });
   })
   .catch(function (err) {
     // Une erreur est survenue
