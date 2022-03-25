@@ -9,7 +9,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
     }
   })
   .then(function (value) {
-    // console.log(value);
+    //console.log(value);
 
     //DOM afficher le produits et ses détails
     let imgContainerProduct = document.querySelector(".item__img");
@@ -34,21 +34,32 @@ fetch(`http://localhost:3000/api/products/${id}`)
       colorsSelected.innerHTML = value.colors[i];
       colorsId.appendChild(colorsSelected);
     }
-
+    // evenement click pour implémenter les valeurs du produit dans mon objet
     let button = document.querySelector("#addToCart");
 
     button.addEventListener("click", () => {
       let objet = {
         id: id,
-        price: price,
+        price: price.innerText * quantity.value + "€",
         couleur: colorsId.value,
         quantite: quantity.value,
       };
-      console.log(objet);
+      /* console.log(objet);
       console.log(id);
-      console.log(price);
+      console.log(price.innerText);
       console.log(colorsId.value);
       console.log(quantity.value);
+      */
+
+      // localStorage
+      let produitStocker = JSON.parse(localStorage.getItem("produit"));
+
+      if (!produitStocker) {
+        produitStocker = [];
+        produitStocker.push(objet);
+        console.log(produitStocker);
+      } else {
+      }
     });
   })
   .catch(function (err) {
