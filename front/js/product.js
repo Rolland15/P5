@@ -26,7 +26,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
     let quantity = document.querySelector("#quantity");
     let colorsId = document.querySelector("#colors");
 
-    //boucle pour le choix des couleurs
+    //boucle for pour le choix des couleurs
 
     for (let i = 0; i < value.colors.length; i++) {
       let colorsSelected = document.createElement("option");
@@ -38,7 +38,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
     let button = document.querySelector("#addToCart");
 
     button.addEventListener("click", () => {
-      //event.preventDefault();
+      //Création de L'objet
       let objet = {
         id: id,
         img: imgProduct,
@@ -54,13 +54,14 @@ fetch(`http://localhost:3000/api/products/${id}`)
       */
 
       // localStorage
-      let produitStocker = JSON.parse(localStorage.getItem("produit"));
+      let produitStocker = [];
 
-      if (!produitStocker) {
-        produitStocker = [];
-        produitStocker.push(objet);
+      if (objet.quantite >= 1 && objet.couleur) {
+        produitStocker.push(JSON.stringify(objet));
+        localStorage.setItem("userProduct", produitStocker);
         console.log(produitStocker);
       } else {
+        alert("sélectionner tout les détails de la commande");
       }
     });
   })

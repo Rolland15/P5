@@ -1,7 +1,7 @@
-let panier = localStorage.getItem("produit");
+let panier = localStorage.getItem("userProduct");
 
 console.log(panier);
-let cardItems = document.querySelector("cart__items");
+/*let cardItems = document.querySelector("cart__items");
 let panierArticle = document.createElement("article");
 panierArticle.classList.add("cart__item");
 let divImgPanier = document.createElement("div");
@@ -63,3 +63,4 @@ if (panier === null) {
 } else {
   console.log("il y a des produits");
 }
+*/
