@@ -38,8 +38,10 @@ fetch(`http://localhost:3000/api/products/${id}`)
     let button = document.querySelector("#addToCart");
 
     button.addEventListener("click", () => {
+      //event.preventDefault();
       let objet = {
         id: id,
+        img: imgProduct,
         price: price.innerText * quantity.value + "€",
         couleur: colorsId.value,
         quantite: quantity.value,
