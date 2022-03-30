@@ -1,4 +1,6 @@
-let panier = localStorage.getItem("userProduct");
+let objetPanier = localStorage.getItem("userProduct");
+let panier = [];
+panier.push(JSON.parse(objetPanier));
 
 console.log(panier);
 
@@ -30,10 +32,10 @@ contentDelete.classList.add("cart__item__content__setting__delete");
 paragrapheDelete.classList.add("deleteItem");
 
 //innerHTML
-paragrapheQuantity.textContent = "Qté :";
+paragrapheQuantity.textContent = `Qté :`;
 
 //appendChild et SetAttribute
-divImgPanier.appendChild(imgPanier).setAttribute("src", panier.img);
+divImgPanier.appendChild(imgPanier).setAttribute("src", panier[0].img);
 cartItemContent.appendChild(cartItemContentDescription);
 cartItemContentDescription.appendChild(titreDescription);
 cartItemContentDescription.appendChild(paragrapheDescription);
