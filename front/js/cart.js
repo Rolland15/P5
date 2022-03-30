@@ -1,66 +1,64 @@
 let panier = localStorage.getItem("userProduct");
 
 console.log(panier);
-/*let cardItems = document.querySelector("cart__items");
+
+//Creation d'élement
+let cardItems = document.querySelector("#cart__items");
 let panierArticle = document.createElement("article");
-panierArticle.classList.add("cart__item");
 let divImgPanier = document.createElement("div");
-divImgPanier.classList.add("cart__item__img");
 let imgPanier = document.createElement("img");
-divImgPanier.appendChild(imgPanier).setAttribute("src", object.img);
 let cartItemContent = document.createElement("div");
-cartItemContent.classList.add("cart__item__content");
 let cartItemContentDescription = document.createElement("div");
-cartItemContentDescription.classList.add("cart__item__content__description");
-let titreDescription = document.querySelector("h2");
-let paragraphe = document.querySelector("p");
-cartItemContent.appendChild(
-  cartItemContentDescription,
-  titreDescription,
-  paragraphe
-);
-
+let titreDescription = document.createElement("h2");
+let paragrapheDescription = document.createElement("p");
+let paragrapheDescription2 = document.createElement("p");
+let paragrapheDelete = document.createElement("p");
+let paragrapheQuantity = document.createElement("p");
 let contentSetting = document.createElement("div");
-contentSetting.classList.add("cart__item__content__settings");
 let contentSettingQuantity = document.createElement("div");
-contentSettingQuantity.classList.add("cart__item__content__settings__quantity");
 let input = document.createElement("input");
-input
-  .setAttribute(
-    "type",
-    "number",
-    "name",
-    "itemQuantity",
-    "min",
-    "1",
-    "max",
-    "100",
-    "value",
-    "42"
-  )
-  .classList.add("itemQuantity");
-contentSetting.apprendChild(paragraphe, input);
-
 let contentDelete = document.createElement("div");
+//ClassList
+contentSetting.classList.add("cart__item__content__settings");
+panierArticle.classList.add("cart__item");
+divImgPanier.classList.add("cart__item__img");
+cartItemContent.classList.add("cart__item__content");
+cartItemContentDescription.classList.add("cart__item__content__description");
+contentSettingQuantity.classList.add("cart__item__content__settings__quantity");
+input.classList.add("itemQuantity");
 contentDelete.classList.add("cart__item__content__setting__delete");
-contentDelete.appendChild(paragraphe.classList.add("deleteItem"));
+paragrapheDelete.classList.add("deleteItem");
 
-panierArticle.appendChild(
-  divImgPanier,
-  cartItemContent,
-  contentSetting,
-  contentSettingQuantity,
-  contentDelete
+//innerHTML
+paragrapheQuantity.textContent = "Qté :";
+
+//appendChild et SetAttribute
+divImgPanier.appendChild(imgPanier).setAttribute("src", panier.img);
+cartItemContent.appendChild(cartItemContentDescription);
+cartItemContentDescription.appendChild(titreDescription);
+cartItemContentDescription.appendChild(paragrapheDescription);
+cartItemContentDescription.appendChild(paragrapheDescription2);
+input.setAttribute(
+  "type",
+  "number",
+  "name",
+  "itemQuantity",
+  "min",
+  "1",
+  "max",
+  "100",
+  "value",
+  "42"
 );
+contentSettingQuantity.appendChild(paragrapheQuantity);
+contentSettingQuantity.appendChild(input);
+contentDelete.appendChild(paragrapheDelete);
+contentSetting.appendChild(contentSettingQuantity);
+contentSetting.appendChild(contentDelete);
+panierArticle.appendChild(divImgPanier);
+panierArticle.appendChild(cartItemContent);
+panierArticle.appendChild(contentSetting);
+
+console.log(panierArticle);
 
 cardItems.appendChild(panierArticle);
-
-let panierUtilisateur = document.querySelector("#cart__items");
-console.log(panierUtilisateur);
-
-if (panier === null) {
-  console.log("il y a rien");
-} else {
-  console.log("il y a des produits");
-}
-*/

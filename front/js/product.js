@@ -39,6 +39,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     button.addEventListener("click", () => {
       //Création de L'objet
+
       let objet = {
         id: id,
         img: imgProduct,
