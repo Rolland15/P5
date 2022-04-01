@@ -36,6 +36,21 @@ fetch(`http://localhost:3000/api/products/${id}`)
     }
     // evenement click pour implémenter les valeurs du produit dans mon objet
     let button = document.querySelector("#addToCart");
+    let produitStocker = [];
+
+    function ajoutPanier(objet) {
+      if (produitStocker.length > 0) {
+        localStorage.getItem("userProduct");
+        produitStocker.push(JSON.parse(objet));
+        console.log(produitStocker);
+      } else if (objet.quantite >= 1 && objet.couleur) {
+        produitStocker.push(JSON.stringify(objet));
+        localStorage.setItem("userProduct", produitStocker);
+        console.log(produitStocker);
+      } else {
+        alert("sélectionner tout les détails de la commande");
+      }
+    }
 
     button.addEventListener("click", () => {
       //Création de L'objet
@@ -54,60 +69,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
       console.log(quantity.value);
       */
 
-      // localStorage
-      let produitStocker = [];
-
-      if (objet.quantite >= 1 && objet.couleur) {
-        produitStocker.push(JSON.stringify(objet));
-        localStorage.setItem("userProduct", produitStocker);
-        console.log(produitStocker);
-      } else {
-        alert("sélectionner tout les détails de la commande");
-      }
+      ajoutPanier(objet);
     });
   })
   .catch(function (err) {
-    // Une erreur est survenue
+    console.log("une erreur est survenu : " + err);
   });
-
-/*let url = new URLSearchParams(window.location.search);
-
-if(url.has('id')){
-    let id = url.get("id");
-    console.log(id);
-}else{
-    window.location.pathname = "index.html"
-}
-
-function myFunction(parameter){
-  let myVariable = parameter + 1;
-  return myVariable;
-}
-
-var toto = myFunction(10);
-
-fetch(`http://localhost:3000/api/products`)
-  .then(function(res) {
-    if (res.ok) {
-      return res.json();
-    }
-  })
-  .then(function(value) {
-    console.log(value);
-    console.log(window.location);
-    for(let i = 0; i < value.length; i++){
-     let id  = value[i]._id; 
-     console.log(id);
-    let imgContainerProduct = document.querySelector(".item__img");
-    let imgProduct = document.createElement("img");
-    imgContainerProduct.appendChild(imgProduct).setAttribute("src");
-
-    
-    
-
-    }
-    
-  })
-  .catch(function(err) {
-    // Une erreur est survenue
-  });*/
