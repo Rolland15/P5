@@ -36,16 +36,17 @@ fetch(`http://localhost:3000/api/products/${id}`)
     }
     // evenement click pour implémenter les valeurs du produit dans mon objet
     let button = document.querySelector("#addToCart");
-    let produitStocker = [];
 
+    let produitStocker = [];
+    // function pour le localStorage
     function ajoutPanier(objet) {
-      if (produitStocker.length > 0) {
-        localStorage.getItem("userProduct");
-        produitStocker.push(JSON.parse(objet));
-        console.log(produitStocker);
-      } else if (objet.quantite >= 1 && objet.couleur) {
+      if (objet.quantite >= 1 && objet.couleur) {
         produitStocker.push(JSON.stringify(objet));
         localStorage.setItem("userProduct", produitStocker);
+        console.log(produitStocker);
+      } else if (produitStocker.length > 0) {
+        localStorage.getItem("userProduct");
+        produitStocker.push(JSON.parse(objet));
         console.log(produitStocker);
       } else {
         alert("sélectionner tout les détails de la commande");
