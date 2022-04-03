@@ -38,9 +38,16 @@ fetch(`http://localhost:3000/api/products/${id}`)
     let button = document.querySelector("#addToCart");
 
     let produitStocker = [];
+
     // function pour le localStorage
     function ajoutPanier(objet) {
-      if (objet.quantite >= 1 && objet.couleur) {
+      let sameProduct = produitStocker.find(
+        (j) => j.id === produitStocker[objet.id]
+      );
+      console.log(sameProduct);
+      if (sameProduct != undefined) {
+        objet.quantite++;
+      } else if (objet.quantite >= 1 && objet.couleur) {
         produitStocker.push(JSON.stringify(objet));
         localStorage.setItem("userProduct", produitStocker);
         console.log(produitStocker);
