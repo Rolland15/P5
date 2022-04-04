@@ -1,8 +1,8 @@
 let objetPanier = localStorage.getItem("userProduct");
-let panier = [];
-panier.push(JSON.parse(objetPanier));
+let productPanier = [];
+productPanier.push(objetPanier);
 
-console.log(panier);
+console.log(productPanier);
 
 //Creation d'élement
 let cardItems = document.querySelector("#cart__items");
@@ -35,7 +35,7 @@ paragrapheDelete.classList.add("deleteItem");
 paragrapheQuantity.textContent = `Qté :`;
 
 //appendChild et SetAttribute
-divImgPanier.appendChild(imgPanier).setAttribute("src", panier[0].img);
+divImgPanier.appendChild(imgPanier).setAttribute("src", productPanier[0].img);
 cartItemContent.appendChild(cartItemContentDescription);
 cartItemContentDescription.appendChild(titreDescription);
 cartItemContentDescription.appendChild(paragrapheDescription);

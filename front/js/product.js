@@ -41,13 +41,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     // function pour le localStorage
     function ajoutPanier(objet) {
-      let sameProduct = produitStocker.find(
-        (j) => j.id === produitStocker[objet.id]
-      );
-      console.log(sameProduct);
-      if (sameProduct != undefined) {
-        objet.quantite++;
-      } else if (objet.quantite >= 1 && objet.couleur) {
+      if (objet.quantite >= 1 && objet.couleur) {
         produitStocker.push(JSON.stringify(objet));
         localStorage.setItem("userProduct", produitStocker);
         console.log(produitStocker);
@@ -57,6 +51,16 @@ fetch(`http://localhost:3000/api/products/${id}`)
         console.log(produitStocker);
       } else {
         alert("sélectionner tout les détails de la commande");
+      }
+    }
+    let sameProduct = produitStocker.find((p) => p.id == objet.id);
+    console.log(sameProduct);
+
+    function memeProduits(sameProduct) {
+      if (sameProduct != undefined) {
+        console.log("ça marche");
+      } else {
+        console.log("ça ne marche pas");
       }
     }
 
@@ -76,7 +80,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
       console.log(colorsId.value);
       console.log(quantity.value);
       */
-
+      memeProduits(sameProduct);
       ajoutPanier(objet);
     });
   })
