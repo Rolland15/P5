@@ -46,24 +46,20 @@ fetch(`http://localhost:3000/api/products/${id}`)
         localStorage.setItem("userProduct", produitStocker);
         console.log(produitStocker);
       } else if (produitStocker.length > 0) {
-        localStorage.getItem("userProduct");
-        produitStocker.push(JSON.parse(objet));
-        console.log(produitStocker);
+        produitStocker.push(JSON.stringify(objet));
+        localStorage.setItem("userProduct", produitStocker);
       } else {
-        alert("sélectionner tout les détails de la commande");
-      }
-    }
-    let sameProduct = produitStocker.find((p) => p.id == objet.id);
-    console.log(sameProduct);
-
-    function memeProduits(sameProduct) {
-      if (sameProduct != undefined) {
-        console.log("ça marche");
-      } else {
-        console.log("ça ne marche pas");
+        alert("veuillez choisir tout les détails de l'article.");
       }
     }
 
+    function sameId() {
+      let get = localStorage.getItem("userProduct");
+      let test = JSON.parse(get);
+      if (test) {
+        console.log(test.quantite);
+      }
+    }
     button.addEventListener("click", () => {
       //Création de L'objet
 
@@ -80,8 +76,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
       console.log(colorsId.value);
       console.log(quantity.value);
       */
-      memeProduits(sameProduct);
+
       ajoutPanier(objet);
+      sameId();
     });
   })
   .catch(function (err) {
