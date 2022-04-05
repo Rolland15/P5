@@ -53,13 +53,19 @@ fetch(`http://localhost:3000/api/products/${id}`)
       }
     }
 
-    function sameId() {
-      let get = localStorage.getItem("userProduct");
-      let test = JSON.parse(get);
-      if (test) {
-        console.log(test.quantite);
+    function samePanier(objet) {
+      let ok = localStorage.getItem("userProduct");
+      console.log(ok.id);
+
+      if (ok.id === objet.id) {
+        parseInt(ok.quantite);
+
+        ok.quantite++;
+      } else {
+        console.log("Aller!");
       }
     }
+
     button.addEventListener("click", () => {
       //Création de L'objet
 
@@ -70,15 +76,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
         couleur: colorsId.value,
         quantite: quantity.value,
       };
-      /* console.log(objet);
-      console.log(id);
-      console.log(price.innerText);
-      console.log(colorsId.value);
-      console.log(quantity.value);
-      */
 
       ajoutPanier(objet);
-      sameId();
+      samePanier(objet);
     });
   })
   .catch(function (err) {
