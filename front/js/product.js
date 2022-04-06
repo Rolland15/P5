@@ -41,11 +41,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     // function pour le localStorage
     function ajoutPanier(objet) {
-      if (objet.quantite >= 1 && objet.couleur) {
-        produitStocker.push(JSON.stringify(objet));
-        localStorage.setItem("userProduct", produitStocker);
-        console.log(produitStocker);
-      } else if (produitStocker.length > 0) {
+      if ((objet.quantite >= 1 && objet.couleur) || produitStocker.length > 0) {
         produitStocker.push(JSON.stringify(objet));
         localStorage.setItem("userProduct", produitStocker);
       } else {
@@ -54,15 +50,13 @@ fetch(`http://localhost:3000/api/products/${id}`)
     }
 
     function samePanier(objet) {
-      let ok = localStorage.getItem("userProduct");
-      console.log(ok.id);
-
-      if (ok.id === objet.id) {
-        parseInt(ok.quantite);
-
-        ok.quantite++;
+      if (objet.id) {
+        let test = parseInt(objet.quantite);
+        let result = test + test;
+        objet.quantite = result;
+        console.log(produitStocker);
       } else {
-        console.log("Aller!");
+        console.log("pas trouver");
       }
     }
 
@@ -76,9 +70,8 @@ fetch(`http://localhost:3000/api/products/${id}`)
         couleur: colorsId.value,
         quantite: quantity.value,
       };
-
-      ajoutPanier(objet);
       samePanier(objet);
+      ajoutPanier(objet);
     });
   })
   .catch(function (err) {
