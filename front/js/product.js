@@ -40,23 +40,25 @@ fetch(`http://localhost:3000/api/products/${id}`)
     let produitStocker = [];
 
     // function pour le localStorage
-    function ajoutPanier(objet) {
-      if ((objet.quantite >= 1 && objet.couleur) || produitStocker.length > 0) {
-        produitStocker.push(JSON.stringify(objet));
+    function Panier(objet) {
+      test(objet);
+      console.log(produitStocker);
+      if (objet.qty >= 1 && objet.color) {
         localStorage.setItem("userProduct", produitStocker);
+        produitStocker.push(JSON.stringify(objet));
+        console.log(produitStocker);
       } else {
-        alert("veuillez choisir tout les détails de l'article.");
+        console.log("ok");
       }
     }
 
-    function samePanier(objet) {
-      if (objet.id) {
-        let test = parseInt(objet.quantite);
-        let result = test + test;
-        objet.quantite = result;
-        console.log(produitStocker);
-      } else {
-        console.log("pas trouver");
+    function test(objet) {
+      produitStocker.find((ok) => ok.id === objet.id);
+      if (objet.id == objet.id) {
+        localStorage.getItem("userProduct");
+        parseInt(objet.qty);
+
+        objet.qty++;
       }
     }
 
@@ -67,11 +69,13 @@ fetch(`http://localhost:3000/api/products/${id}`)
         id: id,
         img: imgProduct,
         price: price.innerText * quantity.value + "€",
-        couleur: colorsId.value,
-        quantite: quantity.value,
+        color: colorsId.value,
+        qty: quantity.value,
       };
-      samePanier(objet);
-      ajoutPanier(objet);
+
+      Panier(objet);
+
+      // samePanier(objet);
     });
   })
   .catch(function (err) {
