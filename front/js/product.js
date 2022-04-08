@@ -41,6 +41,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     // function pour le localStorage
     function Panier(objet) {
+      test(objet);
       console.log(produitStocker);
       if (objet.qty >= 1 && objet.color) {
         localStorage.setItem("userProduct", produitStocker);
@@ -50,16 +51,16 @@ fetch(`http://localhost:3000/api/products/${id}`)
       } else {
         console.log("ok");
       }
-      test(objet);
     }
 
     function test(objet) {
       let ro = produitStocker.find((ok) => ok.id === produitStocker[id]);
-      console.log(ro);
+      console.log(produitStocker[id]);
       if (ro) {
         localStorage.getItem("userProduct");
         parseInt(objet.qty);
-        produitStocker.push(JSON.stringify(objet + objet.qty));
+        produitStocker.splice(ro, objet.qty);
+        produitStocker.push(JSON.stringify(objet));
         console.log(produitStocker);
       }
     }
