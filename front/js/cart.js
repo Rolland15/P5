@@ -1,6 +1,6 @@
 let objetPanier = localStorage.getItem("userProduct");
 let productPanier = [];
-productPanier.push(objetPanier);
+productPanier.push(JSON.stringify(objetPanier));
 
 console.log(productPanier);
 
