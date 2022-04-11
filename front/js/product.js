@@ -41,12 +41,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     // function pour le localStorage
     function Panier(objet) {
-      test(objet);
-      console.log(produitStocker);
-      if (objet.qty >= 1 && objet.color) {
-        localStorage.setItem("userProduct", produitStocker);
+      if (objet.qty && objet.color) {
         produitStocker.push(JSON.stringify(objet));
-        console.log(produitStocker);
+        localStorage.setItem("userProduct", produitStocker);
       } else {
         console.log("ok");
       }
@@ -54,7 +51,8 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     function test(objet) {
       let sameId = produitStocker.find((ok) => ok.id == produitStocker[id]);
-      console.log(produitStocker[id]);
+
+      console.log(objet.titre);
 
       if (sameId) {
         localStorage.getItem("userProduct");
@@ -65,19 +63,20 @@ fetch(`http://localhost:3000/api/products/${id}`)
       }
     }
 
+    //Evènement au click
     button.addEventListener("click", () => {
       //Création de L'objet
-
       let objet = {
         id: id,
-        img: imgProduct,
+        titre: value.name,
+        img: value.imageUrl,
         price: price.innerText * quantity.value + "€",
         color: colorsId.value,
         qty: quantity.value,
       };
 
       Panier(objet);
-      console.log(produitStocker);
+      test(objet);
 
       // samePanier(objet);
     });
