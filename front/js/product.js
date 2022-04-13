@@ -34,35 +34,35 @@ fetch(`http://localhost:3000/api/products/${id}`)
       colorsSelected.innerHTML = value.colors[i];
       colorsId.appendChild(colorsSelected);
     }
-    // evenement click pour implémenter les valeurs du produit dans mon objet
+
     let button = document.querySelector("#addToCart");
-
     let produitStocker = [];
-
     // function pour le localStorage
     function Panier(objet) {
-      if (objet.qty && objet.color) {
-        produitStocker.push(JSON.stringify(objet));
+      // console.log(produitStocker);
+      if (objet.qty >= 1 && objet.color) {
         localStorage.setItem("userProduct", produitStocker);
+        produitStocker.push(JSON.stringify(objet));
+        // console.log(produitStocker);
       } else {
         console.log("ok");
       }
+      test(objet);
     }
 
     function test(objet) {
-      let sameId = produitStocker.find((ok) => ok.id == produitStocker[id]);
-
-      console.log(objet.titre);
-
-      if (sameId) {
-        localStorage.getItem("userProduct");
+      let local = localStorage.getItem("userProduct");
+      let ro = local.includes(objet.id);
+      console.log("objet " + typeof objet.id);
+      console.log("produitStocker " + typeof local[0].id);
+      console.log("ro " + ro);
+      if (ro != undefined) {
         parseInt(objet.qty);
-        produitStocker.splice(sameId, objet.qty);
+        produitStocker.splice(ro, objet.qty);
         produitStocker.push(JSON.stringify(objet));
-        console.log(produitStocker);
+        // console.log(produitStocker);
       }
     }
-
     //Evènement au click
     button.addEventListener("click", () => {
       //Création de L'objet
@@ -74,9 +74,8 @@ fetch(`http://localhost:3000/api/products/${id}`)
         color: colorsId.value,
         qty: quantity.value,
       };
-
+      console.log(produitStocker);
       Panier(objet);
-      test(objet);
 
       // samePanier(objet);
     });
