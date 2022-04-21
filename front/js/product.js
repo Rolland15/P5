@@ -59,6 +59,11 @@ fetch(`http://localhost:3000/api/products/${id}`)
         console.log("ouai");
         let localGet = JSON.parse(localStorage.getItem("userProduct"));
         let productQty = parseInt(localGet.qty);
+        let objetQty = parseInt(objet.qty);
+        let testQty = productQty + objetQty;
+        objet.qty = testQty;
+        console.log(typeof objet.qty);
+        console.log(testQty);
         console.log(localGet);
         console.log(typeof productQty);
       } else if (objet.qty && objet.color) {
