@@ -36,63 +36,26 @@ fetch(`http://localhost:3000/api/products/${id}`)
     }
 
     let button = document.querySelector("#addToCart");
+
     //function pour le localStorage
-    let produitStocker = [];
+    function local(objet) {
+      let tableau = [];
+      tableau.push(objet);
+      localStorage.setItem("user", JSON.stringify(tableau));
 
-    function test2(local) {
-      let localGet = JSON.parse(local);
-      console.log(localGet);
-      produitStocker.push(localGet);
-
-      console.log(produitStocker);
-      if (produitStocker.length != null) {
-        console.log("ok2");
-        //test(objet);
-      }
-    }
-
-    function Panier(objet) {
-      let tableau = produitStocker.push(JSON.stringify(objet));
-      // let local = localStorage.getItem("userProduct");
-
-      if (tableau > 1) {
-        console.log("ouai");
-        let localGet = JSON.parse(localStorage.getItem("userProduct"));
-        let productQty = parseInt(localGet.qty);
-        let objetQty = parseInt(objet.qty);
-        let testQty = productQty + objetQty;
-        objet.qty = testQty;
-        console.log(typeof objet.qty);
-        console.log(testQty);
-        console.log(localGet);
-        console.log(typeof productQty);
-      } else if (objet.qty && objet.color) {
-        localStorage.setItem("userProduct", produitStocker);
-
-        //let localGet = JSON.parse(local);
-        //let localQty = parseInt(localGet.qty);
-        console.log(tableau);
-        // console.log(typeof localGet.qty);
-        // console.log(typeof localQty);
-        //console.log(local);
-      } else {
-        console.log("ok");
-      }
-    }
-
-    function test(objet) {
-      let localGet = localStorage.getItem("userProduct");
-      let ro = localGet.includes(objet.id);
-      // console.log("objet " + objet["id"]);
-      //console.log(localGet["userProduct"].id);
-      console.log("ro " + ro);
-      if (ro != undefined) {
-        let qty = parseInt(objet.qty);
-        objet.qty = qty += 1;
-
-        console.log(objet.qty);
-      } else {
-        produitStocker.push(JSON.stringify(objet));
+      console.log(tableau);
+      if (tableau.length != null) {
+        for (let x = 0; x < tableau.length; x++) {
+          if (tableau[x].id === objet.id && tableau[x].color === objet.color) {
+            return tableau[x].qty++;
+          } else if (
+            (tableau[x].id === objet.id && tableau[x].color != objet.color) ||
+            tableau[x].id != objet.id
+          ) {
+            console.log("noveau produit");
+          }
+         
+        }
       }
     }
 
@@ -108,7 +71,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
         qty: quantity.value,
       };
 
-      Panier(objet);
+      local(objet);
     });
   })
   .catch(function (err) {
