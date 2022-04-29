@@ -38,27 +38,31 @@ fetch(`http://localhost:3000/api/products/${id}`)
     let button = document.querySelector("#addToCart");
 
     //function pour le localStorage
-    function local(objet) {
-      let tableau = [];
-      tableau.push(objet);
+    let tableau = [];
+    function local() {
       localStorage.setItem("user", JSON.stringify(tableau));
-
-      console.log(tableau);
-      if (tableau.length != null) {
-        for (let x = 0; x < tableau.length; x++) {
-          if (tableau[x].id === objet.id && tableau[x].color === objet.color) {
-            return tableau[x].qty++;
-          } else if (
-            (tableau[x].id === objet.id && tableau[x].color != objet.color) ||
-            tableau[x].id != objet.id
-          ) {
-            console.log("noveau produit");
-          }
-         
-        }
-      }
     }
 
+    function controle(objet) {
+      let produit = JSON.parse(localStorage.getItem("user"));
+      console.log(objet.id);
+      for (let y = 0; y < produit.length; y++) {
+        if (objet.id === produit[y].id && objet.color === produit[y].color) {
+          parseInt(produit[y].qty + objet.qty);
+
+          console.log(produit[y].qty);
+        } else {
+          console.log("jijd");
+        }
+      }
+
+      localStorage.setItem("user", JSON.stringify(tableau));
+      console.log(tableau);
+    }
+
+    function tableauPush(objet) {
+      tableau.push(objet);
+    }
     //Evènement au click
     button.addEventListener("click", () => {
       //Création de L'objet
@@ -70,8 +74,10 @@ fetch(`http://localhost:3000/api/products/${id}`)
         color: colorsId.value,
         qty: quantity.value,
       };
+      local();
 
-      local(objet);
+      controle(objet);
+      tableauPush(objet);
     });
   })
   .catch(function (err) {
