@@ -45,23 +45,31 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     function controle(objet) {
       let produit = JSON.parse(localStorage.getItem("user"));
-      console.log(objet.id);
+      // console.log(objet.id);
+
       for (let y = 0; y < produit.length; y++) {
         if (objet.id === produit[y].id && objet.color === produit[y].color) {
-          parseInt(produit[y].qty + objet.qty);
+          //console.log(produit[y].qty);
+          JSON.parse(localStorage.getItem("user"));
+          let localQty = parseInt(produit[y].qty);
+          let objetQty = parseInt(objet.qty);
 
-          console.log(produit[y].qty);
-        } else {
-          console.log("jijd");
+          let result = localQty + objetQty;
+          console.log(result);
+          localStorage.setItem("user", JSON.stringify(tableau));
+          //console.log((qty += objetQty));
         }
       }
 
-      localStorage.setItem("user", JSON.stringify(tableau));
       console.log(tableau);
     }
 
     function tableauPush(objet) {
-      tableau.push(objet);
+      if (objet.qty && objet.color) {
+        tableau.push(objet);
+      } else {
+        alert("veuillez remplir tout les champs");
+      }
     }
     //Evènement au click
     button.addEventListener("click", () => {
@@ -74,10 +82,10 @@ fetch(`http://localhost:3000/api/products/${id}`)
         color: colorsId.value,
         qty: quantity.value,
       };
+      tableauPush(objet);
       local();
 
       controle(objet);
-      tableauPush(objet);
     });
   })
   .catch(function (err) {
