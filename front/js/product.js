@@ -59,13 +59,12 @@ fetch(`http://localhost:3000/api/products/${id}`)
             (produit[y].qty = result),
             (produit[y].price = resultPrice),
             console.log("test ok"),
-            tableau.push(objet),
             localStorage.setItem("user", JSON.stringify(tableau))
           );
 
           //console.log((qty += objetQty));
         } else {
-          tableau.push(objet);
+          localStorage.setItem("user", JSON.stringify(tableau));
         }
       }
 
