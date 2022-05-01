@@ -45,19 +45,27 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     function controle(objet) {
       let produit = JSON.parse(localStorage.getItem("user"));
-      // console.log(objet.id);
+      console.log(produit);
 
       for (let y = 0; y < produit.length; y++) {
         if (objet.id === produit[y].id && objet.color === produit[y].color) {
           //console.log(produit[y].qty);
-          JSON.parse(localStorage.getItem("user"));
           let localQty = parseInt(produit[y].qty);
           let objetQty = parseInt(objet.qty);
-
           let result = localQty + objetQty;
-          console.log(result);
-          localStorage.setItem("user", JSON.stringify(tableau));
+          let localPrice = parseInt(produit[y].price);
+          let resultPrice = localPrice * result;
+          return (
+            (produit[y].qty = result),
+            (produit[y].price = resultPrice),
+            console.log("test ok"),
+            tableau.push(objet),
+            localStorage.setItem("user", JSON.stringify(tableau))
+          );
+
           //console.log((qty += objetQty));
+        } else {
+          tableau.push(objet);
         }
       }
 
@@ -82,10 +90,10 @@ fetch(`http://localhost:3000/api/products/${id}`)
         color: colorsId.value,
         qty: quantity.value,
       };
-      tableauPush(objet);
-      local();
 
+      local();
       controle(objet);
+      tableauPush(objet);
     });
   })
   .catch(function (err) {
