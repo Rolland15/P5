@@ -49,6 +49,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
     }
     function localControle(objet) {
       let recuperationLocal = JSON.parse(localStorage.getItem("panier"));
+      console.log(typeof recuperationLocal);
       if (recuperationLocal === null) {
         createLocal(objet);
       } else if (recuperationLocal != null) {
@@ -57,20 +58,22 @@ fetch(`http://localhost:3000/api/products/${id}`)
             recuperationLocal[y].id === objet.id &&
             recuperationLocal[y].color === objet.color
           ) {
-            console.log(recuperationLocal[y].id);
-            console.log(recuperationLocal[y].color);
+            // console.log(recuperationLocal[y].id);
+            // console.log(recuperationLocal[y].color);
             let objetQty = parseInt(objet.qty);
             let localQty = parseInt(recuperationLocal[y].qty);
             let result = objetQty + localQty;
             recuperationLocal[y].qty = result;
-            console.log(result);
+            // console.log(result);
             localStorage.setItem("panier", JSON.stringify(recuperationLocal));
           } else {
-            createLocal(objet);
+            // console.log(objet);
+            recuperationLocal.push(objet);
+            localStorage.setItem("panier", JSON.stringify(recuperationLocal));
           }
         }
       }
-      console.log(recuperationLocal);
+      // console.log(recuperationLocal);
     }
     //Evènement au click
     button.addEventListener("click", () => {
@@ -83,7 +86,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
         color: colorsId.value,
         qty: quantity.value,
       };
+      console.log(objet);
       localControle(objet);
+      objet = null;
     });
   })
   .catch(function (err) {
