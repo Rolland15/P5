@@ -1,8 +1,9 @@
-let objetPanier = localStorage.getItem("userProduct");
+let objetPanier = localStorage.getItem("panier");
 console.log(objetPanier);
+
 let productPanier = [];
 productPanier.push(JSON.parse(objetPanier));
-console.log(productPanier);
+console.log(productPanier[0][0].id);
 
 console.log(productPanier);
 
@@ -35,13 +36,11 @@ paragrapheDelete.classList.add("deleteItem");
 
 //innerHTML
 paragrapheQuantity.textContent = `Qté :`;
-titreDescription.innerHTML = productPanier[0].titre;
-paragrapheDescription.innerHTML = productPanier[0].color;
-paragrapheDescription2.innerHTML = productPanier[0].price;
+
 paragrapheDelete.textContent = "Supprimer";
 
 //appendChild et SetAttribute
-divImgPanier.appendChild(imgPanier).setAttribute("src", productPanier[0].img);
+//divImgPanier.appendChild(imgPanier).setAttribute("src", productPanier[0].img);
 cartItemContent.appendChild(cartItemContentDescription);
 cartItemContentDescription.appendChild(titreDescription);
 cartItemContentDescription.appendChild(paragrapheDescription);
@@ -50,7 +49,7 @@ input.setAttribute("type", "number");
 input.setAttribute("name", "itemQuantity");
 input.setAttribute("min", "1");
 input.setAttribute("max", "100");
-input.setAttribute("value", productPanier[0].qty);
+//input.setAttribute("value", productPanier[0].qty);
 input.textContent = productPanier[0].qty;
 contentSettingQuantity.appendChild(paragrapheQuantity);
 contentSettingQuantity.appendChild(input);
@@ -60,6 +59,17 @@ contentSetting.appendChild(contentDelete);
 panierArticle.appendChild(divImgPanier);
 panierArticle.appendChild(cartItemContent);
 panierArticle.appendChild(contentSetting);
+function testPanier() {}
+for (let i = 0; i < productPanier[0].length; i++) {
+  divImgPanier
+    .appendChild(imgPanier)
+    .setAttribute("src", productPanier[0][i].img);
+  input.setAttribute("value", productPanier[0][i].qty);
+  titreDescription.innerHTML = productPanier[0][i].titre;
+  paragrapheDescription.innerHTML = productPanier[0][i].color;
+  paragrapheDescription2.innerHTML = productPanier[0][i].price;
+  console.log(productPanier[0][i]);
+}
 
 console.log(panierArticle);
 
