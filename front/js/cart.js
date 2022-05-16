@@ -74,7 +74,15 @@ for (let a = 0; a < productPanier[0].length; a++) {
   console.log(productPanier[0][a]);
   cardItems.appendChild(panierArticle);
 
-  // prix total
+  let total = parseInt(productPanier[0][a].price);
+  let test = total.reduce((acc, x) => {
+    return acc + x;
+  });
+  console.log(test);
 }
+// prix et quantité total
 
-console.log(panierArticle);
+let qtyPanier = document.querySelector("#totalQuantity");
+let priceTotal = document.querySelector("#totalPrice");
+
+console.log(productPanier[0].price);
