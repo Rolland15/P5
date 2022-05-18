@@ -1,9 +1,9 @@
 let objetPanier = localStorage.getItem("panier");
-console.log(objetPanier);
+console.log(typeof objetPanier);
 
 let productPanier = [];
 productPanier.push(JSON.parse(objetPanier));
-console.log(productPanier[0][0].id);
+console.log(productPanier[0]);
 
 console.log(productPanier);
 let cardItems = document.querySelector("#cart__items");
@@ -73,16 +73,29 @@ for (let a = 0; a < productPanier[0].length; a++) {
   paragrapheDescription2.innerHTML = productPanier[0][a].price;
   console.log(productPanier[0][a]);
   cardItems.appendChild(panierArticle);
+  console.log(paragrapheDelete);
+  console.log(productPanier);
 
-  let total = parseInt(productPanier[0][a].price);
-  let test = total.reduce((acc, x) => {
-    return acc + x;
+  paragrapheDelete.addEventListener("click", () => {
+    cardItems.removeChild(panierArticle);
+    console.log("delete");
+    console.log(productPanier[0][a]);
+    let productPanierFiltrer = productPanier.filter(function (el) {
+      if (
+        el.id != productPanier[0][a].id &&
+        el.color != productPanier[0][a].color
+      ) {
+        delete productPanier[0][a];
+
+        console.log(el);
+      }
+    });
+
+    console.log(productPanierFiltrer);
   });
-  console.log(test);
 }
 // prix et quantité total
 
 let qtyPanier = document.querySelector("#totalQuantity");
 let priceTotal = document.querySelector("#totalPrice");
-
-console.log(productPanier[0].price);
+let paragrapheDelete = document.createElement("p");
