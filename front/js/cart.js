@@ -80,18 +80,11 @@ for (let a = 0; a < productPanier[0].length; a++) {
     cardItems.removeChild(panierArticle);
     console.log("delete");
     console.log(productPanier[0][a]);
-    let productPanierFiltrer = productPanier.filter(function (el) {
-      if (
-        el.id != productPanier[0][a].id &&
-        el.color != productPanier[0][a].color
-      ) {
-        delete productPanier[0][a];
 
-        console.log(el);
-      }
+    let tableauFiltrer = productPanier.filter((el) => {
+      return el.id !== productPanier[0][a].id;
     });
-
-    console.log(productPanierFiltrer);
+    console.log(tableauFiltrer);
   });
 }
 // prix et quantité total
