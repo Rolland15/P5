@@ -1,9 +1,6 @@
 let objetPanier = JSON.parse(localStorage.getItem("panier"));
 console.log(objetPanier);
 
-//console.log(productPanier[0]);
-
-//console.log(productPanier);
 let cardItems = document.querySelector("#cart__items");
 
 for (let a = 0; a < objetPanier.length; a++) {
@@ -41,8 +38,6 @@ for (let a = 0; a < objetPanier.length; a++) {
 
   paragrapheDelete.textContent = "Supprimer";
 
-  //appendChild et SetAttribute
-  //divImgPanier.appendChild(imgPanier).setAttribute("src", productPanier[0].img);
   cartItemContent.appendChild(cartItemContentDescription);
   cartItemContentDescription.appendChild(titreDescription);
   cartItemContentDescription.appendChild(paragrapheDescription);
@@ -51,7 +46,7 @@ for (let a = 0; a < objetPanier.length; a++) {
   input.setAttribute("name", "itemQuantity");
   input.setAttribute("min", "1");
   input.setAttribute("max", "100");
-  //input.setAttribute("value", productPanier[0].qty);
+
   input.textContent = objetPanier.qty;
   contentSettingQuantity.appendChild(paragrapheQuantity);
   contentSettingQuantity.appendChild(input);
@@ -66,20 +61,13 @@ for (let a = 0; a < objetPanier.length; a++) {
   input.setAttribute("value", objetPanier[a].qty);
   titreDescription.innerHTML = objetPanier[a].titre;
   paragrapheDescription.innerHTML = objetPanier[a].color;
-  paragrapheDescription2.innerHTML = objetPanier[a].price;
+  paragrapheDescription2.innerHTML = objetPanier[a].price + " €";
 
   cardItems.appendChild(panierArticle);
-  // console.log(paragrapheDelete);
-  //console.log(productPanier);
 
   paragrapheDelete.addEventListener("click", () => {
     cardItems.removeChild(panierArticle);
-    //console.log("delete");
-
-    /*delete objetPanier[a];
-    console.log(objetPanier);
-    localStorage.setItem("panier", JSON.stringify(objetPanier));
-*/ for (var i = 0; i < objetPanier.length; i++) {
+    for (var i = 0; i < objetPanier.length; i++) {
       if (
         objetPanier[i].id === objetPanier[a].id &&
         objetPanier[i].color === objetPanier[a].color
@@ -88,20 +76,68 @@ for (let a = 0; a < objetPanier.length; a++) {
         localStorage.setItem("panier", JSON.stringify(objetPanier));
         console.log(objetPanier);
       }
-    }
-    //return true;
 
-    //localStorage.removeItem("panier");
-    //localStorage.setItem("panier", JSON.stringify(objetPanier));
+      window.location.reload();
+    }
   });
+  // prix et quantité total
+
+  let qtyPanier = document.querySelector("#totalQuantity");
+  let priceTotal = document.querySelector("#totalPrice");
+  let tab = [];
+  input.addEventListener("click", () => {
+    console.log(objetPanier[a].price);
+
+    objetPanier[a].qty = input.value;
+    for (let i = 0; i < objetPanier.lenght; i++) {
+      let objPrice = parseInt(objetPanier[i].price);
+      console.log(objPrices[i]);
+
+      let inputValue = parseInt(input.value);
+      let newPrice = objPrice * inputValue;
+      tab.push(newPrice);
+    }
+
+    localStorage.setItem("total", JSON.stringify(tab));
+    console.log(objetPanier[a].price);
+    console.log(input.value);
+    console.log(tab);
+    // PRIX TOTAL
+    const totalPrice = tab.reduce((total, item) => {
+      return total + parseInt(item);
+    }, 0);
+    console.log(totalPrice);
+    priceTotal.innerHTML = totalPrice;
+    //window.location.reload();
+  });
+
+  //QUANTITE TOTAL
+  const totalQty = objetPanier.reduce((total, item) => {
+    return total + parseInt(item.qty);
+  }, 0);
+  console.log(totalQty);
+
+  qtyPanier.innerHTML = totalQty;
 }
 
-// prix et quantité total
+/*Validation Du Formulaire*/
+let button = document.querySelector("#order");
+let firstName = document.querySelector("#firstName");
+let lastName = document.querySelector("#lastName");
+let address = document.querySelector("#address");
+let city = document.querySelector("#city");
+let email = document.querySelector("#email");
+button.addEventListener("click", (e) => {
+  e.preventDefault();
 
-let qtyPanier = document.querySelector("#totalQuantity");
-let priceTotal = document.querySelector("#totalPrice");
+  //creation de l'objet utilisateur
+  let utilisateurForm = {
+    prenom: firstName.value,
+    nom: lastName.value,
+    adresse: address.value,
+    city: city.value,
+    email: email.value,
+  };
 
-const total = objetPanier.reduce((total, panier) => {
-  return total + panier.price;
-}, 0);
-console.log(total);
+  console.log(utilisateurForm);
+});

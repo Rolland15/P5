@@ -82,7 +82,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
         id: id,
         titre: value.name,
         img: value.imageUrl,
-        price: price.innerText * quantity.value + "€",
+        price: price.innerText,
         color: colorsId.value,
         qty: quantity.value,
       };
