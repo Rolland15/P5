@@ -91,24 +91,25 @@ for (let a = 0; a < objetPanier.length; a++) {
     objetPanier[a].qty = input.value;
     for (let i = 0; i < objetPanier.lenght; i++) {
       let objPrice = parseInt(objetPanier[i].price);
-      console.log(objPrices[i]);
+      console.log(objPrices[i].price);
 
       let inputValue = parseInt(input.value);
       let newPrice = objPrice * inputValue;
-      tab.push(newPrice);
-    }
 
-    localStorage.setItem("total", JSON.stringify(tab));
-    console.log(objetPanier[a].price);
-    console.log(input.value);
-    console.log(tab);
-    // PRIX TOTAL
-    const totalPrice = tab.reduce((total, item) => {
-      return total + parseInt(item);
-    }, 0);
-    console.log(totalPrice);
-    priceTotal.innerHTML = totalPrice;
-    //window.location.reload();
+      objetPanier[a].price = newPrice;
+
+      localStorage.setItem("panier", JSON.stringify(objetPanier));
+      console.log(objetPanier[a].price);
+      console.log(input.value);
+      console.log(tab);
+      // PRIX TOTAL
+      const totalPrice = tab.reduce((total, item) => {
+        return total + parseInt(item);
+      }, 0);
+      console.log(totalPrice);
+      priceTotal.innerHTML = totalPrice;
+      //window.location.reload();
+    }
   });
 
   //QUANTITE TOTAL
@@ -121,23 +122,143 @@ for (let a = 0; a < objetPanier.length; a++) {
 }
 
 /*Validation Du Formulaire*/
+let myForm = document.querySelector(".cart__order__form");
 let button = document.querySelector("#order");
 let firstName = document.querySelector("#firstName");
 let lastName = document.querySelector("#lastName");
 let address = document.querySelector("#address");
 let city = document.querySelector("#city");
 let email = document.querySelector("#email");
+let firstNameErrorMsg = document.querySelector("#firstNameErrorMsg");
+let lastNameErrorMsg = document.querySelector("#lastNameErrorMsg");
+let addressErrorMsg = document.querySelector("#addressErrorMsg");
+let cityErrorMsg = document.querySelector("#cityErrorMsg");
+let emailErrorMsg = document.querySelector("#emailErrorMsg");
+//objet utilisateur
+let contact = {
+  firstName: firstName.value,
+  lastName: lastName.value,
+  address: address.value,
+  city: city.value,
+  email: email.value,
+};
+//Evènement
+
+firstName.addEventListener("change", () => {
+  validFirstName(this);
+});
+lastName.addEventListener("change", () => {
+  validLastName(this);
+});
+address.addEventListener("change", () => {
+  validaddress(this);
+});
+city.addEventListener("change", () => {
+  validCityName(this);
+});
+email.addEventListener("change", () => {
+  validEmail(this);
+});
+
+//function Contrôle Formulaire
+
+const validFirstName = (input) => {
+  let regex = /^[a-zA-Z-]+$/;
+
+  let testName = regex.test(firstName.value);
+
+  if (testName) {
+    console.log("ok");
+    contact.firstName = firstName.value;
+  } else {
+    console.log("ouai");
+    firstNameErrorMsg.innerHTML = "invalid";
+  }
+};
+
+const validLastName = (input) => {
+  let regex = /^[a-zA-Z-]+$/;
+
+  let testName = regex.test(lastName.value);
+  console.log(testName);
+
+  if (testName) {
+    console.log("ok");
+    contact.lastName = lastName.value;
+    lastNameErrorMsg.innerHTML = "";
+  } else {
+    console.log("ouai");
+    lastNameErrorMsg.innerHTML = "invalid";
+  }
+};
+const validaddress = (input) => {
+  let regex = /^[a-zA-Z0-9 À-ú]+$/;
+
+  let testAddress = regex.test(address.value);
+  console.log(testAddress);
+
+  if (testAddress) {
+    console.log("ok");
+    contact.address = address.value;
+    addressErrorMsg.innerHTML = "";
+  } else {
+    console.log("ouai");
+    addressErrorMsg.innerHTML = "invalid";
+  }
+};
+
+const validCityName = (input) => {
+  let regex = /^[a-zA-Z- ]+$/;
+
+  let testName = regex.test(city.value);
+  console.log(testName);
+
+  if (testName) {
+    console.log("ok");
+    contact.city = city.value;
+    cityErrorMsg.innerHTML = "";
+  } else {
+    console.log("ouai");
+    cityErrorMsg.innerHTML = "invalid";
+  }
+};
+
+const validEmail = (input) => {
+  let regex = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+
+  let test = regex.test(email.value);
+  console.log(test);
+
+  if (test) {
+    console.log("ok");
+    contact.email = email.value;
+    emailErrorMsg.innerHTML = "";
+  } else {
+    emailErrorMsg.innerHTML = "invalid";
+  }
+};
+
+// POST
+
+const commandeTwo = fetch(`http://localhost:3000/api/products/order`, {
+  method: "POST",
+  body: JSON.stringify(objetPanier),
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 button.addEventListener("click", (e) => {
   e.preventDefault();
+  let newTableau = JSON.parse(localStorage.getItem("panier"));
+  newTableau.push(contact);
+  const commandeOne = fetch("http://localhost:3000/api/products/order", {
+    method: "POST",
+    body: JSON.stringify(newTableau),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  //creation de l'objet utilisateur
-  let utilisateurForm = {
-    prenom: firstName.value,
-    nom: lastName.value,
-    adresse: address.value,
-    city: city.value,
-    email: email.value,
-  };
-
-  console.log(utilisateurForm);
+  console.log(commandeOne);
 });
