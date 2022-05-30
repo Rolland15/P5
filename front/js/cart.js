@@ -268,11 +268,16 @@ button.addEventListener("click", (e) => {
       try {
         console.log(response);
         let retour = await response.json();
-        console.log(retour);
+        console.log(retour.orderId);
+        localStorage.setItem("id", JSON.stringify(retour));
+        window.location = `confirmation.html?${retour.orderId}`;
       } catch (e) {
         console.log(e);
       }
     });
+
     console.log(commandeOne);
   }
+
+  // window.location = "confirmation.html";
 });

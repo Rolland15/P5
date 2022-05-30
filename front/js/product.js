@@ -1,6 +1,7 @@
 let url = new URLSearchParams(window.location.search);
-//console.log(url);
+console.log(url);
 let id = url.get("id");
+console.log(id);
 
 fetch(`http://localhost:3000/api/products/${id}`)
   .then(function (res) {
