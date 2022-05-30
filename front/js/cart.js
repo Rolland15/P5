@@ -170,6 +170,7 @@ const validFirstName = (input) => {
   if (testName) {
     console.log("ok");
     contact.firstName = firstName.value;
+    firstNameErrorMsg.innerHTML = "";
   } else {
     console.log("ouai");
     firstNameErrorMsg.innerHTML = "invalid";
@@ -240,25 +241,38 @@ const validEmail = (input) => {
 
 // POST
 
-const commandeTwo = fetch(`http://localhost:3000/api/products/order`, {
-  method: "POST",
-  body: JSON.stringify(objetPanier),
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
 button.addEventListener("click", (e) => {
   e.preventDefault();
-  let newTableau = JSON.parse(localStorage.getItem("panier"));
-  newTableau.push(contact);
-  const commandeOne = fetch("http://localhost:3000/api/products/order", {
-    method: "POST",
-    body: JSON.stringify(newTableau),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  let products = [];
+  for (let a = 0; a < objetPanier.length; a++) {
+    let idProducts = objetPanier[a].id;
+    console.log(idProducts);
+    products.push(idProducts);
+    console.log(products);
 
-  console.log(commandeOne);
+    let touteInfo = {
+      contact,
+      products,
+    };
+
+    console.log(typeof touteInfo);
+    const commandeOne = fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      body: JSON.stringify(touteInfo),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    commandeOne.then(async (response) => {
+      try {
+        console.log(response);
+        let retour = await response.json();
+        console.log(retour);
+      } catch (e) {
+        console.log(e);
+      }
+    });
+    console.log(commandeOne);
+  }
 });
