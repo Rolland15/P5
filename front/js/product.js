@@ -28,18 +28,19 @@ fetch(`http://localhost:3000/api/products/${id}`)
     let colorsId = document.querySelector("#colors");
 
     //boucle for pour le choix des couleurs
-
+    let tableau = [];
     for (let i = 0; i < value.colors.length; i++) {
       let colorsSelected = document.createElement("option");
       colorsSelected.setAttribute("value", value.colors[i]);
       colorsSelected.innerHTML = value.colors[i];
       colorsId.appendChild(colorsSelected);
+      console.log(colorsSelected);
     }
 
     let button = document.querySelector("#addToCart");
 
     //function pour le localStorage
-    let tableau = [];
+
     function createLocal(objet) {
       if (objet.color && objet.qty > 0) {
         tableau.push(objet);
@@ -50,32 +51,40 @@ fetch(`http://localhost:3000/api/products/${id}`)
     }
     function localControle(objet) {
       let recuperationLocal = JSON.parse(localStorage.getItem("panier"));
-      console.log(typeof recuperationLocal);
-      if (recuperationLocal === null) {
-        createLocal(objet);
-      } else if (recuperationLocal != null) {
+      console.log(recuperationLocal);
+      createLocal(objet);
+
+      if (recuperationLocal != null) {
         for (let y = 0; y < recuperationLocal.length; y++) {
           if (
             recuperationLocal[y].id === objet.id &&
             recuperationLocal[y].color === objet.color
           ) {
-            // console.log(recuperationLocal[y].id);
-            // console.log(recuperationLocal[y].color);
-            let objetQty = parseInt(objet.qty);
-            let localQty = parseInt(recuperationLocal[y].qty);
-            let result = objetQty + localQty;
-            recuperationLocal[y].qty = result;
-            // console.log(result);
-            localStorage.setItem("panier", JSON.stringify(recuperationLocal));
-          } else {
-            // console.log(objet);
+            console.log("if");
+
+            const totalQty = recuperationLocal.reduce((total, item) => {
+              return total + parseInt(item.qty);
+            }, parseInt(objet.qty));
+            console.log(typeof totalQty);
+
+            parseInt(recuperationLocal[y].qty);
+
+            recuperationLocal[y].qty = totalQty;
+
+            console.log(recuperationLocal);
+          } else if (
+            recuperationLocal[y].id === objet.id &&
+            recuperationLocal[y].color !== objet.color
+          ) {
+            console.log("test");
             recuperationLocal.push(objet);
-            localStorage.setItem("panier", JSON.stringify(recuperationLocal));
           }
+          localStorage.setItem("panier", JSON.stringify(recuperationLocal));
         }
       }
       // console.log(recuperationLocal);
     }
+
     //Evènement au click
     button.addEventListener("click", () => {
       //Création de L'objet
@@ -87,9 +96,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
         color: colorsId.value,
         qty: quantity.value,
       };
-      console.log(objet);
+      console.log(typeof objet.color);
       localControle(objet);
-      objet = null;
+      // objet = null;
     });
   })
   .catch(function (err) {

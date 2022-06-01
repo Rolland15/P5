@@ -268,9 +268,9 @@ button.addEventListener("click", (e) => {
       try {
         console.log(response);
         let retour = await response.json();
-        console.log(retour.orderId);
+        console.log(retour);
         localStorage.setItem("id", JSON.stringify(retour));
-        window.location = `confirmation.html?${retour.orderId}`;
+        window.location = `confirmation.html?order-id=${retour.orderId}`;
       } catch (e) {
         console.log(e);
       }
