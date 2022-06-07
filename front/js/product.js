@@ -52,13 +52,44 @@ fetch(`http://localhost:3000/api/products/${id}`)
         color: colorsId.value,
         qty: quantity.value,
       };
-      console.log(typeof objet.color);
 
       let objetLocal = JSON.parse(localStorage.getItem("panier"));
+      console.log(objetLocal);
 
       function ajoutLocal(objet) {
-        objetLocal.push(objet);
-        localStorage.setItem("panier", JSON.stringify(objetLocal));
+        if (objet.qty && objet.color) {
+          objetLocal.push(objet);
+          localStorage.setItem("panier", JSON.stringify(objetLocal));
+        } else {
+          alert("veuillez Remplir tout les champs");
+        }
+      }
+
+      function checkLocal(objet) {
+        for (let i = 0; i < objetLocal.length; i++) {
+          let localId = objetLocal[i].id;
+          let localColor = objetLocal[i].color;
+          if (localId === objet.id && localColor === objet.color) {
+            let localQty = parseInt(objetLocal[i].qty);
+            let objetQty = parseInt(objet.qty);
+            localQty += objetQty;
+            objetLocal.splice(i, 1);
+            objetLocal[i].qty = localQty;
+
+            localStorage.setItem("panier", JSON.stringify(objetLocal));
+            console.log("oui");
+          } else if (
+            objetLocal[i].id === objet.id &&
+            objetLocal[i].color != objet.color
+          ) {
+            let localQty = parseInt(objetLocal[i].qty);
+            let objetQty = parseInt(objet.qty);
+            localQty += objetQty;
+
+            objetLocal[i].qty = localQty;
+            localStorage.setItem("panier", JSON.stringify(objetLocal));
+          }
+        }
       }
 
       if (objetLocal) {
@@ -68,6 +99,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
         ajoutLocal(objet);
       }
 
+      checkLocal(objet);
       // objet = null;
     });
   })

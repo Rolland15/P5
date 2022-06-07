@@ -87,10 +87,18 @@ for (let a = 0; a < objetPanier.length; a++) {
 
   let qtyPanier = document.querySelector("#totalQuantity");
   let priceTotal = document.querySelector("#totalPrice");
-  let prixTotal = [];
+
   input.addEventListener("click", () => {
-    // calculPrixQty(objetPanier);
-    //window.location.reload();
+    console.log(objetPanier[a].qty);
+    let newQtyProductLs = parseInt(objetPanier[a].qty);
+    let newInput = parseInt(input.value);
+    newQtyProductLs = newInput;
+    objetPanier[a].qty = newQtyProductLs;
+
+    localStorage.setItem("panier", JSON.stringify(objetPanier));
+
+    console.log(newQtyProductLs);
+    window.location.reload();
   });
   // PRIX TOTAL
   function calculPrixQty(objetPanier) {
