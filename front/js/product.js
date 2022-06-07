@@ -77,16 +77,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
             objetLocal[i].qty = localQty;
 
             localStorage.setItem("panier", JSON.stringify(objetLocal));
+          } else if (localId === objet.id && localColor !== objet.color) {
             console.log("oui");
-          } else if (
-            objetLocal[i].id === objet.id &&
-            objetLocal[i].color != objet.color
-          ) {
-            let localQty = parseInt(objetLocal[i].qty);
-            let objetQty = parseInt(objet.qty);
-            localQty += objetQty;
 
-            objetLocal[i].qty = localQty;
             localStorage.setItem("panier", JSON.stringify(objetLocal));
           }
         }
