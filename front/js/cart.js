@@ -103,9 +103,10 @@ for (let a = 0; a < objetPanier.length; a++) {
       console.log(input.value);
       console.log(tab);
       // PRIX TOTAL
-      const totalPrice = tab.reduce((total, item) => {
-        return total + parseInt(item);
-      }, 0);
+      const totalPrice = tab.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      );
       console.log(totalPrice);
       priceTotal.innerHTML = totalPrice;
       //window.location.reload();

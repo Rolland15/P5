@@ -41,50 +41,6 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     //function pour le localStorage
 
-    function createLocal(objet) {
-      if (objet.color && objet.qty > 0) {
-        tableau.push(objet);
-        localStorage.setItem("panier", JSON.stringify(tableau));
-      } else {
-        alert("veuillez remplir tout les champs");
-      }
-    }
-    function localControle(objet) {
-      let recuperationLocal = JSON.parse(localStorage.getItem("panier"));
-      console.log(recuperationLocal);
-      createLocal(objet);
-
-      if (recuperationLocal != null) {
-        for (let y = 0; y < recuperationLocal.length; y++) {
-          if (
-            recuperationLocal[y].id === objet.id &&
-            recuperationLocal[y].color === objet.color
-          ) {
-            console.log("if");
-
-            const totalQty = recuperationLocal.reduce((total, item) => {
-              return total + parseInt(item.qty);
-            }, parseInt(objet.qty));
-            console.log(typeof totalQty);
-
-            parseInt(recuperationLocal[y].qty);
-
-            recuperationLocal[y].qty = totalQty;
-
-            console.log(recuperationLocal);
-          } else if (
-            recuperationLocal[y].id === objet.id &&
-            recuperationLocal[y].color !== objet.color
-          ) {
-            console.log("test");
-            recuperationLocal.push(objet);
-          }
-          localStorage.setItem("panier", JSON.stringify(recuperationLocal));
-        }
-      }
-      // console.log(recuperationLocal);
-    }
-
     //Evènement au click
     button.addEventListener("click", () => {
       //Création de L'objet
@@ -97,7 +53,22 @@ fetch(`http://localhost:3000/api/products/${id}`)
         qty: quantity.value,
       };
       console.log(typeof objet.color);
-      localControle(objet);
+
+      let objetLocal = JSON.parse(localStorage.getItem("panier"));
+
+      function ajoutLocal(objet) {
+        objetLocal.push(objet);
+        localStorage.setItem("panier", JSON.stringify(objetLocal));
+      }
+
+      if (objetLocal) {
+        ajoutLocal(objet);
+      } else {
+        objetLocal = [];
+        ajoutLocal(objet);
+        console.log(objetLocal);
+      }
+
       // objet = null;
     });
   })
