@@ -66,7 +66,6 @@ fetch(`http://localhost:3000/api/products/${id}`)
       } else {
         objetLocal = [];
         ajoutLocal(objet);
-        console.log(objetLocal);
       }
 
       // objet = null;

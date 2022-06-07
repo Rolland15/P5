@@ -75,6 +75,8 @@ for (let a = 0; a < objetPanier.length; a++) {
         objetPanier.splice(i, 1);
         localStorage.setItem("panier", JSON.stringify(objetPanier));
         console.log(objetPanier);
+      } else if (objetPanier.lenght === 0) {
+        console.log("fin");
       }
 
       window.location.reload();
@@ -102,16 +104,25 @@ for (let a = 0; a < objetPanier.length; a++) {
       console.log(objetPanier[a].price);
       console.log(input.value);
       console.log(tab);
-      // PRIX TOTAL
-      const totalPrice = tab.reduce(
-        (total, item) => total + item.price * item.qty,
-        0
-      );
-      console.log(totalPrice);
-      priceTotal.innerHTML = totalPrice;
+
       //window.location.reload();
     }
   });
+
+  // PRIX TOTAL
+
+  let prixTotal = [];
+
+  for (let p = 0; p < objetPanier.length; p++) {
+    let priceProduct = parseInt(objetPanier[p].price);
+    prixTotal.push(priceProduct);
+    console.log(prixTotal);
+  }
+  //Méthode reduce comme dans le MDN
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  const total = prixTotal.reduce(reducer);
+  console.log(total);
+  priceTotal.innerHTML = total;
 
   //QUANTITE TOTAL
   const totalQty = objetPanier.reduce((total, item) => {
