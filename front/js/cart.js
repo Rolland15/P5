@@ -88,7 +88,7 @@ for (let a = 0; a < objetPanier.length; a++) {
   let qtyPanier = document.querySelector("#totalQuantity");
   let priceTotal = document.querySelector("#totalPrice");
 
-  input.addEventListener("click", () => {
+  input.addEventListener("change", () => {
     console.log(objetPanier[a].qty);
     let newQtyProductLs = parseInt(objetPanier[a].qty);
     let newInput = parseInt(input.value);
