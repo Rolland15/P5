@@ -57,7 +57,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
       console.log(objetLocal);
 
       function ajoutLocal(objet) {
-        if (objet.qty && objet.color) {
+        if (objet.qty > 0 && objet.color) {
           objetLocal.push(objet);
           localStorage.setItem("panier", JSON.stringify(objetLocal));
         } else {
